@@ -1,12 +1,10 @@
 package model;
 
-import java.time.LocalDate;
-
-public class Note {
+public class Note implements NotesItem{
     private int id;
     private String title;
     private String content;
-    private LocalDate date;
+    private String date;
 
     public Note(String title, String content) {
         this.title = title;
@@ -37,11 +35,11 @@ public class Note {
         this.id = id;
     }
 
-    public LocalDate getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

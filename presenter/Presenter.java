@@ -17,15 +17,15 @@ public class Presenter {
         return service.editByNumber(number, title, content);
     }
 
-    public String readAll() {
-        return service.readAll();
-    }
-
     public boolean save(String name) {
         return service.save(name);
     }
 
-    public String showAllNotes() {
-        return service.readAll();
+    public String showAllNotes(boolean reverse) {
+        return service.readAll(reverse);
+    }
+
+    public boolean open(String path) {
+        return service.read(path);
     }
 }

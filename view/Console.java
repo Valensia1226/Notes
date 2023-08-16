@@ -23,6 +23,7 @@ public class Console implements view{
 
     @Override
     public void start() {
+        open();
         while (work) {
             System.out.println();
             System.out.println(mainMenu.getMenu());
@@ -37,7 +38,28 @@ public class Console implements view{
         if ((choice > size) || (choice <= 0)) return -1;
         return choice;
     }
-
+    private void open(){
+        System.out.println("1. Создать новый файл" +
+                "2. Открыть файл");
+        int choice = takeChoice(2);
+        if (choice == 1){
+            return;
+        }
+        else if (choice == 2){
+            System.out.println("Введите имя файла");
+            String name = scanner.nextLine();
+            if (!name.contains(".json")) name = name + ".json";
+            this.pathRemember = name;
+            if (!downland(name)) {
+                System.out.println("Файл не найден");
+                open();
+            }
+        }
+        else System.out.printf("Некорректно введена команда. Введите число 1 или 2");
+    }
+    public boolean downland(String path) {
+        return presenter.open(path);
+    }
     public void addNote() {
         System.out.println("Введите заголовок: ");
         String title = scanner.nextLine();
@@ -48,18 +70,18 @@ public class Console implements view{
 
     public void deleteNote() {
         System.out.println("Введите номер заметки, которую хотите удалить: ");
-        System.out.println(presenter.readAll());
+        System.out.println(presenter.showAllNotes(true));
         int number = scanner.nextInt();
         if (presenter.deleteNote(number)) System.out.println("Успешно!");
     }
 
     public void editNote() {
         System.out.println("Введите номер заметки, которую хотите редактировать: ");
-        System.out.println(presenter.readAll());
+        System.out.println(presenter.showAllNotes(true));
         String num = scanner.nextLine();
         int number = exam.itsNumber(num);
         if (number == -1) editNote();
-        //проверка на существование такой заметки
+        //TODO проверка на существование такой заметки
         System.out.println("Введите новый заголовок или нажмите Enter: ");
         String title = scanner.nextLine();
         System.out.println("Введите новое содержание или нажмите Enter: ");
@@ -77,7 +99,7 @@ public class Console implements view{
             } else {
                 System.out.println("Введите имя файла на английском: ");
                 String name = scanner.nextLine().toLowerCase();
-                name = name + ".out";
+                name = name + ".json";
                 if (!save(name)) System.out.println("К сожалению, не получилось сохранить файл!");
                 else System.out.println("Успешно сохранили вашу работу!");
             }
@@ -90,7 +112,7 @@ public class Console implements view{
         return presenter.save(name);
     }
 
-    public void showAllNotes() {
-        System.out.println(presenter.showAllNotes());
+    public void showAllNotes(boolean reverse) {
+        System.out.println(presenter.showAllNotes(reverse));
     }
 }

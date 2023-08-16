@@ -11,11 +11,12 @@ public class MainMenu {
     public MainMenu(Console console){
         this.console = console;
         commandList = new ArrayList<>();
-        commandList.add(new AddNote(console));
-        commandList.add(new EditNote(console));
-        commandList.add(new ShowAllNotes(console));
-        commandList.add(new DeleteNote(console));
-        commandList.add(new Finish(console));
+        commandList.add(new AddNote(console)); //добавить заметку
+        commandList.add(new EditNote(console)); //редактировать заметку
+        commandList.add(new ShowAllNotesWithLast(console)); //показать все заметки с последней
+        commandList.add(new ShowAllNotesWithFirst(console)); //показать все заметки с первой
+        commandList.add(new DeleteNote(console)); //удалить заметку
+        commandList.add(new Finish(console)); //завершить работу
 
     }
     public String getMenu(){

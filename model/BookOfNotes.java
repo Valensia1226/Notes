@@ -25,10 +25,10 @@ public class BookOfNotes implements Serializable {
         StringBuilder sb = new StringBuilder();
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                sb.append(list.get(i));
+                sb.append(list.get(i).getId() + list.get(i).getTitle());
                 sb.append("\n");
             }
-        } else sb.append("Дерево не заполнено");
+        } else sb.append("Нет заметок");
         return sb.toString();
     }
 }
