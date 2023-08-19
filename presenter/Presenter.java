@@ -6,7 +6,7 @@ import model.Service;
 public class Presenter {
     Service service = new Service();
     public void addNote(String title, String content) {
-        service.add(title, content);
+        service.addNote(title, content);
     }
 
     public boolean deleteNote(int number) {
@@ -27,5 +27,9 @@ public class Presenter {
 
     public boolean open(String path) {
         return service.read(path);
+    }
+
+    public String showNote(int number) {
+        return service.showNote(number);
     }
 }
