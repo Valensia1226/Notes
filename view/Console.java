@@ -39,7 +39,7 @@ public class Console implements view{
         return choice;
     }
     private void open(){
-        System.out.println("1. Создать новый файл" +
+        System.out.println("1. Создать новый файл\n" +
                 "2. Открыть файл");
         int choice = takeChoice(2);
         if (choice == 1){
@@ -69,19 +69,18 @@ public class Console implements view{
     }
 
     public void deleteNote() {
-        System.out.println("Введите номер заметки, которую хотите удалить: ");
+        System.out.println("Введите id заметки, которую хотите удалить: ");
         System.out.println(presenter.showAllNotes(true));
         int number = scanner.nextInt();
         if (presenter.deleteNote(number)) System.out.println("Успешно!");
     }
 
     public void editNote() {
-        System.out.println("Введите номер заметки, которую хотите редактировать: ");
+        System.out.println("Введите id заметки, которую хотите редактировать: ");
         System.out.println(presenter.showAllNotes(true));
         String num = scanner.nextLine();
         int number = exam.itsNumber(num);
         if (number == -1) editNote();
-        //TODO проверка на существование такой заметки
         System.out.println("Введите новый заголовок или нажмите Enter: ");
         String title = scanner.nextLine();
         System.out.println("Введите новое содержание или нажмите Enter: ");
@@ -114,5 +113,12 @@ public class Console implements view{
 
     public void showAllNotes(boolean reverse) {
         System.out.println(presenter.showAllNotes(reverse));
+    }
+    public void showNote(){
+        System.out.println("Введите id заметки, которую хотите прочитать: ");
+        System.out.println(presenter.showAllNotes(true));
+        String num = scanner.nextLine();
+        int number = exam.itsNumber(num);
+        if (number == -1) System.out.println(presenter.showNote(number));
     }
 }
