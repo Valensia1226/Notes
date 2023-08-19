@@ -12,9 +12,10 @@ public class MainMenu {
         this.console = console;
         commandList = new ArrayList<>();
         commandList.add(new AddNote(console)); //добавить заметку
-        commandList.add(new EditNote(console)); //редактировать заметку
         commandList.add(new ShowAllNotesWithLast(console)); //показать все заметки с последней
         commandList.add(new ShowAllNotesWithFirst(console)); //показать все заметки с первой
+        commandList.add(new ShowNote(console)); //показать содержимое конкретной заметки
+        commandList.add(new EditNote(console)); //редактировать заметку
         commandList.add(new DeleteNote(console)); //удалить заметку
         commandList.add(new Finish(console)); //завершить работу
 
