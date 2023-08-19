@@ -9,16 +9,22 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Service {
-    BookOfNotes bookOfNotes;
+    private BookOfNotes bookOfNotes;
 
     public Service() {
         this.bookOfNotes = new BookOfNotes();
     }
 
-    public void add(String title, String context) {
+    public void addNote(String title, String context) {
         Note note = new Note(title, context);
         ArrayList<Note> list = bookOfNotes.getList();
-        note.setId(list.size() + 1);
+        if (!list.isEmpty()) {
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getId() > bookOfNotes.getId()) bookOfNotes.setId(list.get(i).getId());
+            }
+        }
+        bookOfNotes.setId(bookOfNotes.getId() + 1);
+        note.setId(bookOfNotes.getId());
         LocalDate date = LocalDate.now();
         note.setDate(date.toString());
         list.add(note);
@@ -51,37 +57,33 @@ public class Service {
 
     public String readAll(boolean reverse) {
         ArrayList<Note> list = bookOfNotes.getList();
-        if (!reverse) {
-            sortByData(list);
-            bookOfNotes.setList(list);
-        } else {
-            sortByID(list);
-            bookOfNotes.setList(list);
+        BookOfNotes temp = new BookOfNotes();
+        if (((list.get(0).getId() < list.get(1).getId()) && reverse) ||
+                ((list.get(0).getId() > list.get(1).getId()) && !reverse)) {
+            Collections.reverse(list);
         }
-        return bookOfNotes.toString();
+        temp.setList(list);
+        return temp.toString();
     }
 
     public String showNote(int number) {
         ArrayList<Note> list = bookOfNotes.getList();
-        if (!numberCheck(number, list)) return null;
-        Note note = list.get(number - 1);
-        return note.toString();
+        for (Note el: list){
+            if (el.getId() == number) {
+                return el.toString();
+            }
+        }
+        return null;
     }
 
     public boolean editByNumber(int number, String title, String content) {
         ArrayList<Note> list = bookOfNotes.getList();
-        if (!numberCheck(number, list)) return false;
-        Note note = list.get(number - 1);
-        if (!title.isEmpty()) note.setTitle(title);
-        if (!content.isEmpty()) note.setContent(content);
-        return true;
-    }
-
-    public boolean deleteByTitle(String title) {
-        ArrayList<Note> list = bookOfNotes.getList();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getTitle().equals(title)) {
-                list.remove(i);
+        Note note;
+        for (Note el: list){
+            if (el.getId() == number) {
+                note = el;
+                if (!title.isEmpty()) note.setTitle(title);
+                if (!content.isEmpty()) note.setContent(content);
                 return true;
             }
         }
@@ -91,16 +93,22 @@ public class Service {
     public boolean deleteByNumber(int number) {
         ArrayList<Note> list = bookOfNotes.getList();
         if (numberCheck(number, list)) {
-            list.remove(number - 1);
-            return true;
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getId() == number){
+                    list.remove(list.get(i));
+                    return true;
+                }
+            }
         }
         return false;
     }
 
-    private boolean numberCheck(int number, ArrayList list) {
+    private boolean numberCheck(int number, ArrayList<Note> list) {
         if (number <= 0) return false;
-        else if (number > list.size()) return false;
-        return true;
+        for (Note el: list){
+            if (el.getId() == number) return true;
+        }
+        return false;
     }
 
     private void sortByData(ArrayList<Note> list) {

@@ -5,6 +5,15 @@ import java.util.ArrayList;
 
 public class BookOfNotes implements Serializable {
     private ArrayList<Note> list;
+    private int id = 0;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public BookOfNotes() {
         this.list = new ArrayList<>();
@@ -25,7 +34,9 @@ public class BookOfNotes implements Serializable {
         StringBuilder sb = new StringBuilder();
         if (list.size() > 0) {
             for (int i = 0; i < list.size(); i++) {
-                sb.append(list.get(i).getId() + list.get(i).getTitle());
+                sb.append("id: ");
+                sb.append(list.get(i).getId());
+                sb.append(" " + list.get(i).getTitle() + " " + list.get(i).getDate());
                 sb.append("\n");
             }
         } else sb.append("Нет заметок");
